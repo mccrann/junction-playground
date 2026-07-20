@@ -1,11 +1,4 @@
-import type { Metadata } from "next";
 import "./globals.css";
-
-export const metadata: Metadata = {
-  title: "Junction Playground – Wearable Health Data Explorer",
-  description:
-    "Explore normalized wearable health data (steps, sleep, heart rate, body composition) via the Junction API.",
-};
 
 export default function RootLayout({
   children,
@@ -14,22 +7,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased bg-gray-50 text-gray-900 font-sans">
-        <header className="border-b border-gray-200 bg-white shadow-sm">
-          <div className="mx-auto flex max-w-5xl items-center gap-3 px-6 py-4">
-            <span className="text-2xl">⌚</span>
-            <div>
-              <h1 className="text-xl font-bold leading-tight">
-                Junction Playground
-              </h1>
-              <p className="text-xs text-gray-500">
-                Normalized wearable health data explorer
-              </p>
-            </div>
-          </div>
+      <body>
+        <header >
+          <h1 >
+            Junction Playground
+          </h1>
+          <p>This demo is making use of generated data for a fictional person. The data comes direct from the Junction sandbox demo devices Oura ring, Fitbit (watch and app) and Apple Health.</p>
+          <p>
+            The table compares each source&apos;s main sleep record for the
+            day, revealing how differently they interpret the same
+            night&apos;s sleep.
+          </p>
+          <p>This is only sample data and is not indicitive of an actual real difference beteen devices. It is only based off of the sample data received from Junction Sandbox.
+          </p>
         </header>
-        <main className="mx-auto max-w-5xl px-6 py-8">{children}</main>
-        <footer className="mt-16 border-t border-gray-200 py-6 text-center text-xs text-gray-400">
+        <main>{children}</main>
+        <footer>
           Powered by the{" "}
           <a
             href="https://junction.health"

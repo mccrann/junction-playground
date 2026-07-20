@@ -1,99 +1,78 @@
-.device-grid {
+:root{
+    --panel-bg:#fff;
+    --main-bg: #ddd;
+    --border-radius: 20px;
+    --grey: #ddd
+
+}
+body{
+    background-color: var(--grey);
+    margin: 0;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+header {
+    background-color: azure;
+    margin:0;
+    padding: 1rem 2rem;
+    text-align: center;
+}
+main {
+    padding:0 1rem;
+}
+.grid {
+    display: grid;
+    gap:5%;
+    align-items: top;
+    padding: 1rem 0;
+}
+.grid2{
+  grid-template-columns: auto auto;
+}
+.grid .panel {
+    padding:2em 2em;
+}
+.device-averages {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
-.device-panel {
-  padding: 1.25rem;
+.device-average {
+  padding: 1rem;
   border: 1px solid #ddd;
-  border-radius: 12px;
-  background: white;
+  border-radius: 10px;
 }
 
-.device-panel h2 {
-  margin: 0 0 1rem;
+.device-average p {
+  margin: 0.5rem 0 0;
 }
 
-.device-records {
-  max-height: 400px;
-  overflow-y: auto;
+.device-average strong,
+.device-average span {
+  display: block;
 }
 
-.device-panel table {
-  width: 100%;
-  border-collapse: collapse;
+.device-average strong {
+  font-size: 1.4rem;
 }
 
-.device-panel th,
-.device-panel td {
-  padding: 0.65rem;
-  border-bottom: 1px solid #eee;
-  text-align: left;
+.device-average span {
+  color: #777;
+  font-size: 0.8rem;
 }
-
-.device-panel th {
-  position: sticky;
-  top: 0;
-  background: white;
-}
-
-@media (max-width: 800px) {
-  .device-grid {
-    grid-template-columns: 1fr;
-  }
-}
-.disagreement-panel {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  background: white;
-}
-
-.disagreement-heading h2 {
-  margin: 0;
-}
-
-.disagreement-heading p {
-  margin: 0.4rem 0 1.25rem;
-  color: #666;
-}
-
-.disagreement-table {
-  overflow-x: auto;
-}
-
-.disagreement-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.disagreement-table th,
-.disagreement-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #eee;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.disagreement-table th {
-  color: #555;
-}
-
-.disagreement-table .difference {
-  font-weight: 700;
-  color: #d14343;
+.panel,
+.sleep-comparison-panel {
+  border: 1px solid var(--grey);
+  border-radius: var(--border-radius);
+  background: var(--panel-bg)
 }
 
 .sleep-comparison-panel {
   margin-top: 2rem;
   padding: 1.5rem;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  background: white;
 }
+
 
 .comparison-heading h2 {
   margin: 0;
@@ -130,4 +109,127 @@
   font-size: 1.1rem;
   width:3em;
   cursor: help;
+}
+
+footer{
+    padding: 2rem;
+}
+.sleep-chat {
+  display: flex;
+  flex-direction: column;
+  height: 340px;
+  margin-top: 1.25rem;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.chat-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #30a46c;
+}
+
+.chat-messages {
+  flex: 1;
+  min-height: 0;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.chat-message {
+  width: fit-content;
+  max-width: 85%;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.chat-message p {
+  margin: 0;
+}
+
+.chat-message p + p {
+  margin-top: 0.5rem;
+}
+
+.assistant-message {
+  background: white;
+  border: 1px solid #e5e5e5;
+}
+
+.chat-input {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid #ddd;
+  background: white;
+}
+
+.chat-input input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.chat-input button {
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.user-message {
+  margin-left: auto;
+  background: #222;
+  color: white;
+}
+
+.chat-message + .chat-message {
+  margin-top: 0.75rem;
+}
+.chat-message p {
+  margin: 0 0 0.6rem;
+}
+
+.chat-message p:last-child {
+  margin-bottom: 0;
+}
+
+.chat-message ul,
+.chat-message ol {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.chat-message li {
+  margin-bottom: 0.4rem;
+}
+
+.chat-message li:last-child {
+  margin-bottom: 0;
+}
+
+.chat-message strong {
+  font-weight: 700;
+}
+
+.chat-message h2,
+.chat-message h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
 }

@@ -1,12 +1,10 @@
 import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
+import SleepChat from "./sleep-chat"
 
 export async function UserData() {
 const userId = process.env.JUNCTION_DEFAULT_USER_ID || '5b572b1e-e813-440a-90ea-2be559afe847';
 const client = new JunctionClient({ apiKey: process.env.JUNCTION_API_KEY, environment: JunctionEnvironment.SandboxEu
 });
-
- 
-
 const sleepdata = await client.sleep.get({
     userId: userId,
     startDate: "2026-07-01",
@@ -68,23 +66,167 @@ const deviceSources = Array.from(
   ).values()
 )
 
+const deviceAverages = deviceSources.map(device => {
+  const totals = mainSleepRecords
+    .filter(record => getSourceKey(record) === device.key)
+    .map(record => record.total)
+    .filter(
+      (total): total is number =>
+        typeof total === "number"
+    )
+
+  const average =
+    totals.reduce((sum, total) => sum + total, 0) /
+    totals.length
+
+  return {
+    ...device,
+    average,
+  }
+})
+
+const validSleepRecords = mainSleepRecords.filter(
+  (
+    record
+  ): record is SleepRecord & { total: number } =>
+    typeof record.total === "number"
+)
+
+const sleepByDuration = [...validSleepRecords].sort(
+  (a, b) => b.total - a.total
+)
+
+const longestSleep = sleepByDuration[0]
+const shortestSleep =
+  sleepByDuration[sleepByDuration.length - 1]
+
+const deviceConsistency = deviceSources
+  .map(device => {
+    const totals = validSleepRecords
+      .filter(
+        record => getSourceKey(record) === device.key
+      )
+      .map(record => record.total)
+
+    if (totals.length < 2) {
+      return null
+    }
+
+    const average =
+      totals.reduce((sum, total) => sum + total, 0) /
+      totals.length
+
+    const variance =
+      totals.reduce(
+        (sum, total) =>
+          sum + Math.pow(total - average, 2),
+        0
+      ) / totals.length
+
+    return {
+      ...device,
+      variation: Math.sqrt(variance),
+    }
+  })
+  .filter(
+    (
+      device
+    ): device is NonNullable<typeof device> =>
+      device !== null
+  )
+
+const deviceReadingCounts = deviceSources.map(device => ({
+  ...device,
+
+  readingCount: validSleepRecords.filter(
+    record => getSourceKey(record) === device.key
+  ).length,
+}))
+
+const mostConsistentDevice =
+  deviceReadingCounts.length > 0
+    ? deviceReadingCounts.reduce((mostConsistent, device) =>
+        device.readingCount >
+        mostConsistent.readingCount
+          ? device
+          : mostConsistent
+      )
+    : null
+
 const dates = Array.from(
   new Set(mainSleepRecords.map(record => record.calendarDate))
 ).sort()
 
 
-
+const agentSleepData = mostConsistentDevice
+  ? validSleepRecords
+      .filter(
+        record =>
+          getSourceKey(record) ===
+          mostConsistentDevice.key
+      )
+      .map(record => ({
+        calendarDate: record.calendarDate,
+        total: record.total,
+        bedtimeStart:
+          record.bedtimeStart?.toISOString() ?? null,
+        bedtimeStop:
+          record.bedtimeStop?.toISOString() ?? null,
+      }))
+  : []
 
 
  return (
   <main>
-    <h1>One Human, Four Devices</h1>
+    <section className = "grid grid2">
+      <div className= "panel">
+        <h2>One Human, Four Devices</h2>
+        <p>
+          Four connected devices recorded the same person sleeping.
+          Here is what each device reported.
+        </p>
+        <div className="device-averages">
+          {deviceAverages.map(device => (
+            <div className="device-average" key={device.key}>
+              {device.icon}
 
+              <p>
+                <strong>{formatDuration(device.average)}</strong>
+                <span> average per night</span>
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+<div className="panel">
+  <h2>Your Sleep Stats</h2>
+
+  {longestSleep && (
     <p>
-      Four connected devices recorded the same person sleeping.
-      Here is what each device reported.
+      <strong>Longest sleep:</strong>{" "}
+      {formatDuration(longestSleep.total)} on{" "}
+      {longestSleep.calendarDate}, recorded by{" "}
+      {longestSleep.source.name}.
     </p>
+  )}
 
+  {shortestSleep && (
+    <p>
+      <strong>Shortest sleep:</strong>{" "}
+      {formatDuration(shortestSleep.total)} on{" "}
+      {shortestSleep.calendarDate}, recorded by{" "}
+      {shortestSleep.source.name}.
+    </p>
+  )}
+
+  {mostConsistentDevice && (
+  <SleepChat
+    deviceName={mostConsistentDevice.label}
+    sleepData={agentSleepData}
+  />
+)}
+</div>
+</section>
 <section className="sleep-comparison-panel">
   <div className="comparison-heading">
     <h2>Total Sleep by Device</h2>
