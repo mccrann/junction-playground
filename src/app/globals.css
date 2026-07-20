@@ -1,1 +1,133 @@
-@import "tailwindcss";
+.device-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.device-panel {
+  padding: 1.25rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+}
+
+.device-panel h2 {
+  margin: 0 0 1rem;
+}
+
+.device-records {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.device-panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.device-panel th,
+.device-panel td {
+  padding: 0.65rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.device-panel th {
+  position: sticky;
+  top: 0;
+  background: white;
+}
+
+@media (max-width: 800px) {
+  .device-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.disagreement-panel {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+}
+
+.disagreement-heading h2 {
+  margin: 0;
+}
+
+.disagreement-heading p {
+  margin: 0.4rem 0 1.25rem;
+  color: #666;
+}
+
+.disagreement-table {
+  overflow-x: auto;
+}
+
+.disagreement-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.disagreement-table th,
+.disagreement-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.disagreement-table th {
+  color: #555;
+}
+
+.disagreement-table .difference {
+  font-weight: 700;
+  color: #d14343;
+}
+
+.sleep-comparison-panel {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+}
+
+.comparison-heading h2 {
+  margin: 0;
+}
+
+.comparison-heading p {
+  margin: 0.4rem 0 1.25rem;
+  color: #666;
+}
+
+.comparison-table {
+  overflow-x: auto;
+}
+
+.comparison-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.comparison-table th:first-child,
+.comparison-table td:first-child {
+  text-align: left;
+}
+
+.device-icon {
+  font-size: 1.1rem;
+  width:3em;
+  cursor: help;
+}

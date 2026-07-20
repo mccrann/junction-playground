@@ -39,6 +39,15 @@ export default function RootLayout({
           >
             Junction API
           </a>
+          Built by{" "} 
+           <a
+            href="https://karenmccrann.xyz"
+            className="underline hover:text-gray-600"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Karen McCrann
+          </a>
         </footer>
       </body>
     </html>
