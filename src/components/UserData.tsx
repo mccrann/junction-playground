@@ -108,41 +108,6 @@ const longestSleep = sleepByDuration[0]
 const shortestSleep =
   sleepByDuration[sleepByDuration.length - 1]
 
-const deviceConsistency = deviceSources
-  .map(device => {
-    const totals = validSleepRecords
-      .filter(
-        record => getSourceKey(record) === device.key
-      )
-      .map(record => record.total)
-
-    if (totals.length < 2) {
-      return null
-    }
-
-    const average =
-      totals.reduce((sum, total) => sum + total, 0) /
-      totals.length
-
-    const variance =
-      totals.reduce(
-        (sum, total) =>
-          sum + Math.pow(total - average, 2),
-        0
-      ) / totals.length
-
-    return {
-      ...device,
-      variation: Math.sqrt(variance),
-    }
-  })
-  .filter(
-    (
-      device
-    ): device is NonNullable<typeof device> =>
-      device !== null
-  )
-
 const deviceReadingCounts = deviceSources.map(device => ({
   ...device,
 
@@ -202,9 +167,12 @@ const fitbitWatchChartData = mainSleepRecords
       <div className= "panel">
         <h2>One Human, Four Devices</h2>
         <p>
-          Four connected devices recorded the same person sleeping.
-          Here is what each device reported.
+          I timeboxed a project with the Junction API and, in just over a day, built a playful way to explore how four connected health sources interpret the same person’s sleep. The dashboard compares their readings, visualises Fitbit sleep over time, and uses an AI agent to answer questions about the most complete dataset.
         </p>
+        <p>
+          This demo uses Junction’s sandbox data, but the same idea could help real users bring fragmented health data together, spot patterns and discrepancies, and add everyday context that wearable devices cannot see.
+        </p>
+
         <div className="device-averages">
           {deviceAverages.map(device => (
             <div className="device-average" key={device.key}>
