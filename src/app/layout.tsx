@@ -9,6 +9,14 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <header >
+          <a
+  href="https://karenmccrann.xyz"
+  className="portfolio-return"
+  aria-label="Back to Karen McCrann’s portfolio"
+>
+  <span aria-hidden="true">←</span>
+  Karen McCrann
+</a>
           <h1 >
             Junction Playground
           </h1>
@@ -32,6 +40,7 @@ export default function RootLayout({
           >
             Junction API
           </a>
+          <br />
           Built by{" "} 
            <a
             href="https://karenmccrann.xyz"
