@@ -1,9 +1,7 @@
 :root{
     --panel-bg:#fff;
-    --main-bg: #ddd;
     --border-radius: 20px;
-    --grey: #ddd
-
+    --grey: #ddd;
 }
 body{
     background-color: var(--grey);
@@ -236,4 +234,28 @@ footer{
 .chat-message h3 {
   margin: 0 0 0.6rem;
   font-size: 1rem;
+}
+
+.sleep-chart-panel {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid #dce8eb;
+}
+
+.sleep-chart {
+  width: 100%;
+  height: 320px;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .sleep-chart-panel {
+    padding: 1rem 0.5rem;
+  }
+
+  .sleep-chart {
+    height: 260px;
+  }
 }

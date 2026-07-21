@@ -1,5 +1,6 @@
 import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 import SleepChat from "./sleep-chat"
+import SleepChart from "./sleep-chart"
 
 export async function UserData() {
 const userId  = process.env.JUNCTION_DEFAULT_USER_ID;
@@ -182,6 +183,18 @@ const agentSleepData = mostConsistentDevice
       }))
   : []
 
+const fitbitWatchChartData = mainSleepRecords
+  .filter(
+    record =>
+      record.source.provider.toLowerCase() === "fitbit" &&
+      record.source.type?.toLowerCase() === "watch" &&
+      typeof record.total === "number"
+  )
+  .map(record => ({
+    date: record.calendarDate,
+    hours: Number((record.total / 3600).toFixed(2)),
+  }))
+  .sort((a, b) => a.date.localeCompare(b.date))
 
  return (
   <main>
@@ -234,6 +247,7 @@ const agentSleepData = mostConsistentDevice
 )}
 </div>
 </section>
+<section><SleepChart data={fitbitWatchChartData} /></section>
 <section className="sleep-comparison-panel">
   <div className="comparison-heading">
     <h2>Total Sleep by Device</h2>
