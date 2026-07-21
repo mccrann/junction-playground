@@ -2,9 +2,16 @@ import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 import SleepChat from "./sleep-chat"
 
 export async function UserData() {
-const userId = process.env.JUNCTION_DEFAULT_USER_ID || '5b572b1e-e813-440a-90ea-2be559afe847';
+const userId  = process.env.JUNCTION_DEFAULT_USER_ID;
 const client = new JunctionClient({ apiKey: process.env.JUNCTION_API_KEY, environment: JunctionEnvironment.SandboxEu
 });
+
+if (!userId || !process.env.JUNCTION_API_KEY) {
+    throw new Error(
+      "Missing required env vars: JUNCTION_DEFAULT_USER_ID and/or JUNCTION_API_KEY"
+    );
+  }
+
 const sleepdata = await client.sleep.get({
     userId: userId,
     startDate: "2026-07-01",
