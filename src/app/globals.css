@@ -11,10 +11,14 @@ body{
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
 }
 header {
-    background-color: azure;
+ position: sticky;
+  top: 0;
+  z-index: 100;
+    background: linear-gradient(to top, azure, lightblue);
     margin:0;
     padding: 1rem 2rem;
     text-align: center;
+    border-bottom: 2px solid #fff;
 }
 main {
     padding:0 1rem;
